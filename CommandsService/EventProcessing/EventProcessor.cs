@@ -69,7 +69,7 @@ namespace CommandsService.EventProcessing
                     }
                     else
                     {
-                        Console.WriteLine("--> Platform already exisits...");
+                        Console.WriteLine("--> Platform already exists...");
                     }
 
                 }

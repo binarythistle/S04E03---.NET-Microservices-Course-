@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using AutoMapper;
 using CommandsService.Models;
 using Grpc.Net.Client;
@@ -22,7 +23,15 @@ namespace CommandsService.SyncDataServices.Grpc
         public IEnumerable<Platform> ReturnAllPlatforms()
         {
             Console.WriteLine($"--> Calling GRPC Service {_configuration["GrpcPlatform"]}");
-            var channel = GrpcChannel.ForAddress(_configuration["GrpcPlatform"]);
+
+            var httpHandler = new HttpClientHandler();
+            //allow certificates that are untrusted/invalid
+            httpHandler.ServerCertificateCustomValidationCallback = 
+                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+
+            var channel = GrpcChannel.ForAddress(_configuration["GrpcPlatform"],
+                new GrpcChannelOptions { HttpHandler = httpHandler });
+                
             var client = new GrpcPlatform.GrpcPlatformClient(channel);
             var request = new GetAllRequest();
 

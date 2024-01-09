@@ -28,7 +28,7 @@ spec:
   - name: platformservice
     protocol: TCP
     port: 80
-    targetPort: 80
+    targetPort: 8080
   - name: plafromgrpc
     protocol: TCP
     port: 666
